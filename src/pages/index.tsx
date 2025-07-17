@@ -1,115 +1,148 @@
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
+import { useEffect, useState, useRef, useCallback } from "react";
+import type { PageContent } from "@src/types";
+import { TopNavbar } from "@src/components/TopNavbar";
+import { Section } from "@src/components/Section";
+import { Sidecar } from "@src/components/Sidecar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const pageContent: PageContent = {
+  topNavbar: {
+    label: "Our services",
+    linkList: [
+      {
+        label: "Let's work together",
+        href: "mailto:lindsey.l.bradford@gmail.com",
+      },
+    ],
+  },
+  sections: [
+    {
+      title: "Front End",
+      drawers: [
+        {
+          title: "Interactive experiences",
+          description: "Custom interactive web experiences using Three.js, WebGL, and creative coding techniques to create memorable digital moments.",
+        },
+        {
+          title: "Data visualization",
+          description: "Transform complex data into compelling visual stories using D3.js, Chart.js, and custom visualization libraries.",
+        },
+        {
+          title: "Experimental interfaces",
+          description: "Push the boundaries of web interaction with experimental UI patterns, gesture controls, and immersive user experiences.",
+        },
+        {
+          title: "Creative coding",
+          description: "Generative art, procedural animations, and algorithmic design systems that bring digital experiences to life.",
+        },
+        {
+          title: "Animation",
+          description: "CSS animations and transitions, JavaScript animations, SVG animations, and Web Animations API.",
+        },
+        {
+          title: "Performance optimization",
+          description: "CSS animations and transitions, JavaScript animations, SVG animations, and Web Animations API.",
+        },
+        {
+          title: "Landing Pages optimization",
+          description: "CSS animations and transitions, JavaScript animations, SVG animations, and Web Animations API.",
+        },
+      ],
+    },
+    {
+      title: "Back End",
+      drawers: [
+        {
+          title: "Back end structures",
+          description: "Server architecture, API design, database optimization, and scalable backend solutions.",
+        },
+        {
+          title: "Content management systems",
+          description: "Headless CMS integration, custom content solutions, and dynamic content delivery.",
+        },
+        {
+          title: "User authentication",
+          description: "Secure authentication systems, OAuth integration, and user management solutions.",
+        },
+        {
+          title: "Remote updating",
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a odio eget massa semper rutrum nec eget neque. Vivamus in dolor sodales consectetur adipiscing elit.",
+        },
+        {
+          title: "Cloud storage",
+          description: "Scalable cloud storage solutions, file management systems, and data backup strategies.",
+        },
+        {
+          title: "Hosting",
+          description: "Reliable hosting solutions, server management, and deployment optimization.",
+        },
+      ],
+    },
+  ],
+};
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const INTERSECTION_OPTIONS = {
+  root: null,
+  rootMargin: "-20% 0px -20% 0px",
+  threshold: 0.5,
+};
 
 export default function Home() {
+  const [activeSection, setActiveSection] = useState(0);
+  const sectionRefs = useRef<(HTMLElement | null)[]>(
+    Array(pageContent.sections.length).fill(null)
+  );
+
+  const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const sectionIndex = sectionRefs.current.findIndex(
+          (ref) => ref === entry.target
+        );
+        if (sectionIndex !== -1) {
+          setActiveSection(sectionIndex);
+        }
+      }
+    });
+  }, []);
+
+  const setSectionRef = useCallback((index: number) =>
+    (el: HTMLElement | null) => {
+      sectionRefs.current[index] = el;
+    }, []
+  );
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersection, INTERSECTION_OPTIONS);
+
+    sectionRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, [handleIntersection]);
+
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20`}
-    >
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/pages/index.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="font-sans">
+      <TopNavbar content={pageContent.topNavbar} />
+
+      <div className="parent-container">
+        <div className="parent-grid">
+          <Sidecar
+            sections={pageContent.sections}
+            activeSection={activeSection}
+          />
+
+          <main className="half-column pb-24">
+            {pageContent.sections.map((section, index) => (
+              <Section
+                key={section.title}
+                section={section}
+                sectionRef={setSectionRef(index)}
+              />
+            ))}
+          </main>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
