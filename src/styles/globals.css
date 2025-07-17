@@ -54,7 +54,7 @@
 }
 
 .sidecar-title {
-  @apply text-6xl md:text-[140px] max-w-3xs font-extrabold tracking-tight leading-none uppercase;
+  @apply text-6xl md:text-[140px] font-extrabold tracking-tight leading-none uppercase;
 }
 
 .sidecar-number {

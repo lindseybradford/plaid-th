@@ -7,7 +7,7 @@ export function Sidecar({ sections, activeSection }: SidecarProps) {
   return (
     <aside className="sidecar half-column">
       <h2 className="sidecar-title">
-        {currentSection?.title}
+        {currentSection?.title.transition} <br />{currentSection?.title.static}
       </h2>
       <div className="sidecar-number" aria-hidden="true">
         {sectionNumber}

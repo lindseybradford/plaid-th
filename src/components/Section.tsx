@@ -20,12 +20,14 @@ export function Section({ section, sectionRef }: SectionProps) {
   return (
     <section ref={sectionRef} className="service-section">
       {section.title && (
-        <h2 className="section-title">({section.title} services)</h2>
+        <h2 className="section-title">
+          ({section.title.transition} {section.title.static} services)
+        </h2>
       )}
       <div role="group" aria-label={`${section.title} services`}>
         {section.drawers.map((drawer, index) => (
           <Drawer
-            key={`${section.title}-${index}`}
+            key={`${section.title.transition}-${index}`}
             drawer={drawer}
             isOpen={openDrawers.has(index)}
             onToggle={() => toggleDrawer(index)}

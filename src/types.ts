@@ -1,9 +1,12 @@
 // types.ts
-export interface LinkItem {
+interface LinkItem {
   label: string;
   href: string;
 }
-
+interface TitleItem {
+  transition: string;
+  static: string;
+}
 export interface TopNavbarContent {
   label: string;
   linkList: LinkItem[];
@@ -15,7 +18,7 @@ export interface Drawer {
 }
 
 export interface Section {
-  title: string;
+  title: TitleItem;
   drawers: Drawer[];
 }
 
