@@ -2,9 +2,7 @@ import { SidecarProps } from "@src/types";
 
 export function Sidecar({ sections, activeSection }: SidecarProps) {
   const currentSection = sections[activeSection] || sections[0];
-  const sectionNumber = (activeSection + 1).toString().padStart(2, "0");
 
-  // Calculate the CSS custom property value based on active section
   const transformValue = `${activeSection * -100}%`;
 
   const wrapCharacters = (text: string) =>
