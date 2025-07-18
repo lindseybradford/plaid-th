@@ -26,7 +26,7 @@ export function TopNavbar({ content }: TopNavbarProps) {
             <li key={index} role="listitem">
               <Link
                 href={link.href}
-                className="nav-link"
+                className="nav-link text-link-transition"
                 aria-label={
                   link.href.startsWith("mailto:")
                     ? `Send email: ${link.label}`
