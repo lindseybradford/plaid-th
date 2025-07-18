@@ -1,6 +1,8 @@
 # Services Portfolio
 
-[Video walkthrough](https://www.youtube.com/watch?v=CGjYHUTM8Go)
+- [Video walkthrough](https://www.youtube.com/watch?v=CGjYHUTM8Go)
+- [Vercel deployment](https://plaid-th.vercel.app/)
+- [Dropbox zip](https://www.dropbox.com/scl/fi/8cvqk2p0lvjr619h7i1aw/candidate-materials.zip?rlkey=4wxo6ritgnkvslrxkaxvi8iog&dl=0)
 
 Built with Next.js, TypeScript, and Tailwind CSS.
 
