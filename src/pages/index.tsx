@@ -148,7 +148,7 @@ export default function Home() {
   }, [handleIntersection]);
 
   return (
-    <div className="font-sans">
+    <div className="page">
       <TopNavbar content={pageContent.topNavbar} />
 
       <div className="parent-container">

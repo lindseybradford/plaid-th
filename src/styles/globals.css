@@ -8,6 +8,15 @@
 }
 
 /* Layout utilities */
+.page {
+  @apply font-sans;
+  background-image: url("../assets/bg.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .parent-container {
   @apply max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8;
 }
@@ -26,7 +35,7 @@
 }
 
 .navbar-content {
-  @apply pt-16 pb-12 flex justify-between items-center;
+  @apply pt-12 pb-8 md:pt-16 md:pb-12 flex justify-between items-center;
 }
 
 .brand-link {
@@ -50,7 +59,7 @@
 }
 
 .sidecar {
-  @apply sticky left-0 top-0 lg:h-screen flex flex-col justify-between md:pt-32 md:pb-16 pointer-events-none;
+  @apply sticky left-0 top-0 lg:h-screen flex flex-col justify-between pt-32 pb-16 pointer-events-none;
 }
 
 .sidecar-title {
@@ -66,7 +75,7 @@
 }
 
 .section-title {
-  @apply text-lg font-semibold mb-6 border-gray-200 border-b pb-8;
+  @apply text-2xl lg:text-lg font-semibold mb-6 border-gray-200 border-b pb-8;
 }
 
 .accordion-item {
@@ -103,8 +112,14 @@
 
 /* Animation */
 .animation-frame {
-  height: 140px;
+  height: 96px;
   overflow: hidden;
+}
+
+@media (min-width: 48rem) {
+  .animation-frame {
+    height: 140px;
+  }
 }
 
 .animation-char {
