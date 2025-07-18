@@ -1,8 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Services Portfolio
 
-## Getting Started
+Built with Next.js, TypeScript, and Tailwind CSS. 
 
-First, run the development server:
+Here's some notes on the build:
+
+## Animation thoughts
+Scroll-based animations use intersection observer API and are designed to scale with content (eg, dynamic content model from a CMS) and respond to some basic breakpoints. I did add a light pass of responsive though this wasn't explicitely requested in the requirements; possibly it will be part of the live coding step, so I kept it to a light pass in case there's mobile-specific designs planned for that session. 
+
+## Accessibility considerations
+I've prioritized inclusive design and added accessibility support for each component based on WCAG compliance best practices. Screen-reader and keyboard tabbing is supported (eg, "skip to content", tab to open drawers) and motion preferences are honored so that drawer transitions and scroll animations are toggled based on `prefers-reduced-motion` system settings. I did a light pass to add high contrast support and improve focus management in the CSS as well.
+
+The page is broken up to honor landmark roles with special attention to the navigation structure and proper heading hiearchy. 
+
+## About the build
+When you run build, Next is configured to generate a static site of complete HTML files to ensure the site is SEO-friendly. I've not added any additional meta tags but usually I'd do a thorough open-graph pass, and potentially account for LD-JSON as well. 
+
+_Somet thoughts on the CSS_
+I opted for semantic CSS to make the project easy to review/scan but I'd add a caveat that, ideally, using Tailwind's utility classes with an API like [tailwind-variants](https://github.com/heroui-inc/tailwind-variants) make for less redudant, more performant, and minimal styles while remaining centralized and easy to manage.
+
+# Install
+Install it
+
+```bash
+npm i
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -16,25 +39,44 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
+src/
+├── components/
+│   ├── Drawer.tsx       # Expandable service drawers
+│   ├── Section.tsx      # Service sections with state management
+│   ├── Sidecar.tsx      # Animated sidebar with section tracking
+│   └── TopNavbar.tsx    # Navigation header
+├── types.ts             # TypeScript interfaces
+└── pages/
+    └── index.tsx        # Main page with content and logic
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+## Key Components
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Sidecar**: Animated sidebar that tracks active sections with character-by-character text animations
+- **Section**: Service sections with accordion-style drawers for detailed descriptions
+- **Drawer**: Individual expandable items with smooth height transitions
+- **TopNavbar**: Fixed navigation header with brand and contact links
 
-## Learn More
+## Styling
 
-To learn more about Next.js, take a look at the following resources:
+Uses Tailwind CSS with custom utility classes defined in `globals.css`:
+- Responsive grid system with `parent-container` and `parent-grid`
+- Semantic component classes for consistent styling
+- Animation utilities for responsive transitions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+## Content Management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Content is structured as a JavaScript object in `index.tsx`, simulating API data:
+- Easy to modify service descriptions and titles
+- Scalable structure for additional sections
+- Type-safe with TypeScript interfaces
 
-## Deploy on Vercel
+## Performance Optimizations
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+- **Intersection Observer** for efficient scroll tracking
+- **CSS-only animations** for smooth 60fps performance
+- **Semantic HTML** for better SEO and accessibility
+- **Optimized bundle** with Next.js automatic optimizations
