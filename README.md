@@ -1,8 +1,11 @@
 # Services Portfolio
 
+[Video walkthrough](https://www.youtube.com/watch?v=CGjYHUTM8Go)
+
 Built with Next.js, TypeScript, and Tailwind CSS.
 
 Here's some notes on the build:
+
 
 ## Animation thoughts
 
@@ -40,10 +43,18 @@ pnpm dev
 # or
 bun dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Project Structure
+# Distribution
+Compile static SSG build
+
+```bash
+npm run build
+```
+
+Export to platform or hosting service of choice. It's easiest with [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme). Check out [Next's docs here](https://nextjs.org/docs/pages/getting-started/deploying) for more info.
+
+# Project Structure
 
 ```
 src/

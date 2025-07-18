@@ -71,7 +71,7 @@
 }
 
 .sidecar-number {
-  @apply text-8xl md:text-9xl font-extrabold text-gray-300 leading-none;
+  @apply text-8xl md:text-9xl font-extrabold text-black leading-none;
 }
 
 .service-section {
@@ -175,7 +175,6 @@
 }
 
 @media (inverted-colors: inverted) or (prefers-contrast: more) {
-  .sidecar-number,
   .accordion-description {
     @apply text-black;
   }
