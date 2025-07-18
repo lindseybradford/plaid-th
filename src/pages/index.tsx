@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useCallback } from "react";
+import Head from "next/head";
 import type { PageContent } from "@src/types";
 import { TopNavbar } from "@src/components/TopNavbar";
 import { Section } from "@src/components/Section";
@@ -168,44 +169,53 @@ export default function Home() {
   };
 
   return (
-    <div className={`font-sans ${reducedMotion ? "reduced-motion" : ""}`}>
-      <a href="#main-content" className="skip-link" onClick={handleSkipToMain}>
-        Skip to main content
-      </a>
+    <>
+      <Head>
+        <title>Our Services - Frontend & Backend Development</title>
+      </Head>
+      <div className={`font-sans ${reducedMotion ? "reduced-motion" : ""}`}>
+        <a
+          href="#main-content"
+          className="skip-link"
+          onClick={handleSkipToMain}
+        >
+          Skip to main content
+        </a>
 
-      <h1 className="sr-only">
-        Our Services - Front End and Back End Development
-      </h1>
+        <h1 className="sr-only">
+          Our Services - Front End and Back End Development
+        </h1>
 
-      <TopNavbar content={pageContent.topNavbar} />
+        <TopNavbar content={pageContent.topNavbar} />
 
-      <div className="parent-container">
-        <div className="parent-grid">
-          <Sidecar
-            sections={pageContent.sections}
-            activeSection={activeSection}
-            reducedMotion={reducedMotion}
-          />
+        <div className="parent-container">
+          <div className="parent-grid">
+            <Sidecar
+              sections={pageContent.sections}
+              activeSection={activeSection}
+              reducedMotion={reducedMotion}
+            />
 
-          <main
-            id="main-content"
-            className="half-column pb-24"
-            role="main"
-            aria-label="Services content"
-            tabIndex={-1}
-          >
-            {pageContent.sections.map((section, index) => (
-              <Section
-                key={`section-${index}`}
-                section={section}
-                sectionRef={setSectionRef(index)}
-                sectionIndex={index}
-                reducedMotion={reducedMotion}
-              />
-            ))}
-          </main>
+            <main
+              id="main-content"
+              className="half-column pb-24"
+              role="main"
+              aria-label="Services content"
+              tabIndex={-1}
+            >
+              {pageContent.sections.map((section, index) => (
+                <Section
+                  key={`section-${index}`}
+                  section={section}
+                  sectionRef={setSectionRef(index)}
+                  sectionIndex={index}
+                  reducedMotion={reducedMotion}
+                />
+              ))}
+            </main>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

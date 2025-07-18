@@ -7,12 +7,10 @@ Your task is to create a fully functional landing page inspired by the [provided
 ## Requirements
 
 1. **Landing page implementation**
-
    - Construct the page layout and styling based on the design reference. Feel free to use placeholder content instead of real text. The focus should be on capturing the structure and visual details of the design.
    - Demonstrate your knowledge of semantic HTML, CSS best practices, and JavaScript semantics.
 
 2. **Background guilloché pattern**
-
    - Use the provided guilloché (turning/interwoven line) pattern in the background of the page.
    - Apply a subtle animation or movement to the pattern, allowing space for creativity in how you choose to animate or style this element.
 
