@@ -107,6 +107,7 @@ const INTERSECTION_OPTIONS = {
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const sectionRefs = useRef<(HTMLElement | null)[]>(
     Array(pageContent.sections.length).fill(null),
   );
@@ -135,6 +136,18 @@ export default function Home() {
   );
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       handleIntersection,
       INTERSECTION_OPTIONS,
@@ -147,8 +160,23 @@ export default function Home() {
     return () => observer.disconnect();
   }, [handleIntersection]);
 
+  const handleSkipToMain = () => {
+    const mainContent = document.getElementById("main-content");
+    if (mainContent) {
+      mainContent.focus();
+    }
+  };
+
   return (
-    <div className="page">
+    <div className={`font-sans ${reducedMotion ? "reduced-motion" : ""}`}>
+      <a href="#main-content" className="skip-link" onClick={handleSkipToMain}>
+        Skip to main content
+      </a>
+
+      <h1 className="sr-only">
+        Our Services - Front End and Back End Development
+      </h1>
+
       <TopNavbar content={pageContent.topNavbar} />
 
       <div className="parent-container">
@@ -156,14 +184,23 @@ export default function Home() {
           <Sidecar
             sections={pageContent.sections}
             activeSection={activeSection}
+            reducedMotion={reducedMotion}
           />
 
-          <main className="half-column pb-24">
+          <main
+            id="main-content"
+            className="half-column pb-24"
+            role="main"
+            aria-label="Services content"
+            tabIndex={-1}
+          >
             {pageContent.sections.map((section, index) => (
               <Section
                 key={`section-${index}`}
                 section={section}
                 sectionRef={setSectionRef(index)}
+                sectionIndex={index}
+                reducedMotion={reducedMotion}
               />
             ))}
           </main>

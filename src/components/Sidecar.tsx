@@ -1,6 +1,10 @@
 import { SidecarProps } from "@src/types";
 
-export function Sidecar({ sections, activeSection }: SidecarProps) {
+export function Sidecar({
+  sections,
+  activeSection,
+  reducedMotion,
+}: SidecarProps) {
   const currentSection = sections[activeSection] || sections[0];
 
   const transformValue = `${activeSection * -100}%`;
@@ -9,7 +13,7 @@ export function Sidecar({ sections, activeSection }: SidecarProps) {
     text.split("").map((char, index) => (
       <span
         key={`${char}-${index}`}
-        style={{ transitionDelay: `${index * 0.05}s` }}
+        style={{ transitionDelay: reducedMotion ? "0s" : `${index * 0.05}s` }}
         className="animation-char"
       >
         {char}
@@ -18,7 +22,7 @@ export function Sidecar({ sections, activeSection }: SidecarProps) {
 
   return (
     <aside
-      className={`sidecar half-column`}
+      className={`sidecar half-column ${reducedMotion ? "no-animation" : ""}`}
       style={{ "--section-transform": transformValue } as React.CSSProperties}
     >
       <h2 className="sidecar-title">
@@ -30,6 +34,12 @@ export function Sidecar({ sections, activeSection }: SidecarProps) {
           ))}
         </div>
         <span>{currentSection?.title.static}</span>
+
+        <span className="sr-only">
+          Currently viewing {currentSection?.title.transition}{" "}
+          {currentSection?.title.static} services, section {activeSection + 1}{" "}
+          of {sections.length}
+        </span>
       </h2>
       <div className="sidecar-number" aria-hidden="true">
         <div className="animation-frame">

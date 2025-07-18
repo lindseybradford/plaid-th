@@ -2,7 +2,17 @@ import { useState, useCallback } from "react";
 import { Drawer } from "@src/components/Drawer";
 import { SectionProps } from "@src/types";
 
-export function Section({ section, sectionRef }: SectionProps) {
+interface ExtendedSectionProps extends SectionProps {
+  sectionIndex: number;
+  reducedMotion: boolean;
+}
+
+export function Section({
+  section,
+  sectionRef,
+  sectionIndex,
+  reducedMotion,
+}: ExtendedSectionProps) {
   const [openDrawers, setOpenDrawers] = useState<Set<number>>(new Set());
 
   const toggleDrawer = useCallback((index: number) => {
@@ -17,16 +27,24 @@ export function Section({ section, sectionRef }: SectionProps) {
     });
   }, []);
 
+  const sectionId = `section-${sectionIndex}`;
+  const sectionTitle = `${section.title.transition} ${section.title.static}`;
+
   return (
-    <section ref={sectionRef} className="service-section">
-      {section.title && (
-        <h2 className="section-title">
-          ({section.title.transition} {section.title.static} services)
-        </h2>
-      )}
+    <section
+      ref={sectionRef}
+      className="service-section"
+      id={sectionId}
+      aria-labelledby={`${sectionId}-heading`}
+    >
+      <h2 id={`${sectionId}-heading`} className="section-title">
+        ({section.title.transition} {section.title.static} services)
+      </h2>
+
       <div
-        role="group"
-        aria-label={`${section.title.transition} ${section.title.static} services`}
+        role="region"
+        aria-label={`${sectionTitle} services`}
+        className="accordion-group"
       >
         {section.drawers.map((drawer, index) => (
           <Drawer
@@ -34,6 +52,9 @@ export function Section({ section, sectionRef }: SectionProps) {
             drawer={drawer}
             isOpen={openDrawers.has(index)}
             onToggle={() => toggleDrawer(index)}
+            sectionIndex={sectionIndex}
+            drawerIndex={index}
+            reducedMotion={reducedMotion}
           />
         ))}
       </div>
