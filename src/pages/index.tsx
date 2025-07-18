@@ -161,7 +161,7 @@ export default function Home() {
           <main className="half-column pb-24">
             {pageContent.sections.map((section, index) => (
               <Section
-                key={section.title}
+                key={`section-${index}`}
                 section={section}
                 sectionRef={setSectionRef(index)}
               />

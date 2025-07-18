@@ -24,7 +24,10 @@ export function Section({ section, sectionRef }: SectionProps) {
           ({section.title.transition} {section.title.static} services)
         </h2>
       )}
-      <div role="group" aria-label={`${section.title} services`}>
+      <div
+        role="group"
+        aria-label={`${section.title.transition} ${section.title.static} services`}
+      >
         {section.drawers.map((drawer, index) => (
           <Drawer
             key={`${section.title.transition}-${index}`}

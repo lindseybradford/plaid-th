@@ -50,7 +50,7 @@
 }
 
 .sidecar {
-  @apply sticky left-0 top-0 h-screen flex flex-col justify-between md:pt-32 md:pb-16;
+  @apply sticky left-0 top-0 h-screen flex flex-col justify-between md:pt-32 md:pb-16 pointer-events-none;
 }
 
 .sidecar-title {
@@ -99,4 +99,16 @@
 
 .accordion-description {
   @apply text-gray-600 leading-relaxed;
+}
+
+/* Animation */
+.animation-frame {
+  height: 140px;
+  overflow: hidden;
+}
+
+.animation-char {
+  display: inline-block;
+  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: translateY(var(--section-transform));
 }
